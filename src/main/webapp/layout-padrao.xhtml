@@ -20,25 +20,35 @@ and open the template in the editor.
     <h:body>
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="100" resizable="true" closable="false" collapsible="false">
-                <div id="topo">
+
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="100">
+                <h:outputText value="Conteudo do rodapé." />
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="242" header="Left" resizable="true" collapsible="true">
+                <h:form>
+                    <p:menu toggleable="true">
+                            <p:menuitem value="Home " icon="ui-icon-disk" />
+                        <p:submenu label="Pessoas">
+                            <p:menuitem value="Cliente" icon="ui-icon-disk" />
+                            <p:menuitem value="Usuário" icon="ui-icon-arrowrefresh-1-w"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="east" size="600" header="Listagem e Consulta" resizable="true" collapsible="true" effect="drop">
+                <ui:insert name="consulta">
                     
-                </div>
-            </p:layoutUnit>
-
-            <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="true" collapsible="true">
-                <h:outputText value="South unit content." />
-            </p:layoutUnit>
-
-            <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="true" collapsible="true">
-                <h:outputText value="West unit content." />
-            </p:layoutUnit>
-
-            <p:layoutUnit position="east" size="200" header="Right" resizable="true" closable="true" collapsible="true" effect="drop">
-                <h:outputText value="Right unit content." />
+                </ui:insert>
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
-                //page code
+                <ui:insert name="conteudo">
+                    
+                </ui:insert>
             </p:layoutUnit>
         </p:layout>
 
