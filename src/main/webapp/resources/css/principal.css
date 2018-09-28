@@ -11,3 +11,7 @@ and open the template in the editor.
 #topo{
     background-color: #DCDCDC;
 }
+
+.semBorda tr, .semBorda td {
+	border: none !important;
+}

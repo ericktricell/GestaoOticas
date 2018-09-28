@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="layout-padrao.xhtml">
+
+
+    <ui:define name="conteudo">
+        <h:form id="dados">
+            <p:panelGrid columns="2" styleClass="semBorda">
+                <p:outputLabel value="Codigo:" for="codigo" />
+                <p:inputText id="codigo" readonly="true" value="#{funcionarioBean.funcionario.codigo}" title="Codigo" />
+                <p:outputLabel value="Nome:" for="nome" />
+                <p:inputText id="nome" value="#{funcionarioBean.funcionario.nome}" title="Nome" />
+                <p:outputLabel value="Cpf:" for="cpf" />
+                <p:inputText id="cpf" value="#{funcionarioBean.funcionario.cpf}" title="Cpf" />
+                <p:outputLabel value="Cargo:" for="cargo" />
+                <p:inputText id="cargo" value="#{funcionarioBean.funcionario.cargo}" title="Cargo" />
+                <p:outputLabel value="Login:" for="login" />
+                <p:inputText id="login" value="#{funcionarioBean.funcionario.login}" title="Login" />
+                <p:outputLabel value="Senha:" for="senha" />
+                <p:password id="senha" value="#{funcionarioBean.funcionario.senha}" title="Senha" />
+                <p:outputLabel value="Tipo de Usuário" for="tipo"/>
+                <p:selectOneMenu id="tipo" value="#{funcionarioBean.funcionario.tipo}">
+                    <f:selectItem itemLabel="Usuário padrão" itemValue="USER"/>
+                    <f:selectItem itemLabel="Administrador" itemValue="ADMIN"/>
+                </p:selectOneMenu>
+                <p:outputLabel value="Ativo:" for="ativo"/>
+                <p:selectBooleanCheckbox id="ativo" value="#{funcionarioBean.funcionario.ativo}"/>
+            </p:panelGrid>
+            <p:commandButton action="#{funcionarioBean.salvar()}" value="Salvar">
+                <f:ajax execute="@form" render="listaFunc"/>
+            </p:commandButton>
+            <p:commandButton action="#{funcionarioBean.novo()}" value="Novo">
+                <f:ajax execute="@form" render="dados"/>
+            </p:commandButton>
+
+        </h:form>
+    </ui:define>
+    <ui:define name="consulta">
+        <f:metadata>
+            <f:viewAction action="#{funcionarioBean.findAll()}"/>
+        </f:metadata>
+        <h:form id="listaFunc">
+            <p:dataTable value="#{funcionarioBean.funList}" var="item" emptyMessage="Sem funcionários registrados" 
+                         selectionMode="single" selection="#{funcionarioBean.funcionario}" rowKey="#{item.codigo}">
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Buscar:" />
+                        <p:inputText onkeyup="#{funcionarioBean.find()}" value="#{funcionarioBean.busca}" placeholder="Entre com nome ou cpf"/>
+                        <p:commandButton icon="fa fa-search" action="#{funcionarioBean.find()}" update="listaFunc"/>
+                    </p:outputPanel>
+                </f:facet>
+                <f:ajax event="rowSelect" listener="#{funcionarioBean.onRowSelected(item.codigo)}" execute="@form" render="dados"/>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nome}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cargo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cargo}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Login"/>
+                    </f:facet>
+                    <h:outputText value="#{item.login}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
